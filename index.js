@@ -103,8 +103,6 @@ app.post("/prepareDispatchTx", async (req, res) => {
   // From Metamask Documentation
   const transactionParameters = {
     nonce: "0x00", // ignored by MetaMask
-    gasPrice: "0x09184e72a000", // customizable by user during MetaMask confirmation.
-    gas: "0x2710", // customizable by user during MetaMask confirmation.
     to: "0x60Ae865ee4C725cd04353b5AAb364553f56ceF82", // Required except during contract publications.
     from: signerAddress, // must match user's active address.
     value: "0x00", // Only required to send ether to the recipient from the initiating external account.
