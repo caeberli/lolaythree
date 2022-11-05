@@ -1,0 +1,10 @@
+import { BaseNft, BaseNftContract, Nft, NftContract } from '../api/nft';
+import { RawBaseNft, RawBaseNftContract, RawNft, RawNftAttributeRarity, RawNftContract } from '../internal/raw-interfaces';
+import { NftAttributeRarity } from '../types/types';
+export declare function formatBlock(block: string | number): string;
+export declare function getBaseNftContractFromRaw(rawBaseNftContract: RawBaseNftContract): BaseNftContract;
+export declare function getNftContractFromRaw(rawNftContract: RawNftContract): NftContract;
+export declare function getBaseNftFromRaw(rawBaseNft: RawBaseNft, contractAddress: string): BaseNft;
+export declare function getNftFromRaw(rawNft: RawNft, contractAddress: string): Nft;
+export declare function getNftRarityFromRaw(rawNftRarity: RawNftAttributeRarity[]): NftAttributeRarity[];
+export declare const IS_BROWSER: boolean;
