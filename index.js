@@ -236,6 +236,59 @@ app.post("/prepareJoinLoyaltyProgram", async (req, res) => {
   });
 });
 
+app.post("/loyaltyPoint", async (req, res) => {
+  const userId = req.body.userId;
+  const businessId = req.body.businessId;
+
+  let tx = await lensMainContract.comment(
+    {
+      profileId: businessId,
+      contentURI: "Verified Store Visit!",
+      profileIdPointed: userId,
+      pubIdPointed: 1,
+      referenceModuleData: "0x",
+      collectModule: "0x0BE6bD7092ee83D44a6eC1D949626FeE48caB30c",
+      collectModuleInitData:
+        "0x0000000000000000000000000000000000000000000000000000000000000000",
+      referenceModule: "0x0000000000000000000000000000000000000000",
+      referenceModuleInitData: "0x",
+    },
+
+    {
+      gasPrice: Math.round(Number(feeData.gasPrice) * 1.5),
+      gasLimit: 500000,
+    }
+  );
+  console.log(tx);
+
+  res.json({
+    tx,
+  });
+});
+
+app.post("/getProfileID", async (req, res) => {
+  const address = req.body.address;
+
+  let resp = await fetch(
+    `https://api.covalenthq.com/v1/80001/address/${address}/balances_v2/?quote-currency=USD&format=JSON&nft=true&no-nft-fetch=false&key=${process.env.COVALENT_API_KEY}`
+  );
+
+  console.log("hi");
+
+  const ret = await resp.json();
+  console.log(ret);
+
+  const profileID = parseInt(
+    ret.data.items.filter(
+      (x) => x.contract_address === "0x60ae865ee4c725cd04353b5aab364553f56cef82"
+    )[0].nft_data[0].token_id
+  );
+
+  res.json({
+    profileID,
+  });
+});
+
 app.post("/testServer", async (req, res) => {
   console.log(process.env.DUMMY_KEY);
   res.json({
