@@ -118,6 +118,39 @@ app.post("/prepareDispatchTx", async (req, res) => {
   });
 });
 
+app.post("/createLoyaltyProgram", async (req, res) => {
+  const businessAddress = req.body.businessAddress;
+  const handle = req.body.handle;
+  //const contentURI = req.body.contentURI;
+  const fullhandle = handle + ".test";
+
+  let profileId = await lensMainContract.getProfileIdByHandle(fullhandle, {
+    gasPrice: Math.round(Number(feeData.gasPrice) * 1.5),
+    gasLimit: 500000,
+  });
+
+  let tx = await lensMainContract.post(
+    {
+      profileId: profileId,
+      contentURI: "",
+      collectModule: "0x0BE6bD7092ee83D44a6eC1D949626FeE48caB30c",
+      collectModuleInitData:
+        "0x0000000000000000000000000000000000000000000000000000000000000000",
+      referenceModule: "0x0000000000000000000000000000000000000000",
+      referenceModuleInitData: "0x",
+    },
+    {
+      gasPrice: Math.round(Number(feeData.gasPrice) * 1.5),
+      gasLimit: 500000,
+    }
+  );
+  console.log(tx);
+
+  res.json({
+    tx,
+  });
+});
+
 app.post("/testServer", async (req, res) => {
   console.log(process.env.DUMMY_KEY);
   res.json({
