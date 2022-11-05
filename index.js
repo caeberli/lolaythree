@@ -222,7 +222,7 @@ app.post("/prepareJoinLoyaltyProgram", async (req, res) => {
   const transactionParameters = {
     nonce: "0x00", // ignored by MetaMask
     gasPrice: "0xEE6B2800", // customizable by user during MetaMask confirmation.
-    gas: "0x186A0", // customizable by user during MetaMask confirmation.
+    gas: "0x493E0", // customizable by user during MetaMask confirmation.
     to: "0x60Ae865ee4C725cd04353b5AAb364553f56ceF82", // Required except during contract publications.
     from: signerAddress, // must match user's active address.
     value: "0x00", // Only required to send ether to the recipient from the initiating external account.
