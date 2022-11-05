@@ -6,6 +6,7 @@ import alc from "alchemy-sdk";
 import Web3 from "web3";
 import Web3EthAbi from "web3-eth-abi";
 import dotenv from "dotenv";
+import * as PushAPI from "@pushprotocol/restapi";
 dotenv.config();
 
 // Getting all ABIs
@@ -267,6 +268,27 @@ app.post("/loyaltyPoint", async (req, res) => {
 });
 
 app.post("/getProfileID", async (req, res) => {
+  const address = req.body.address;
+
+  let resp = await fetch(
+    `https://api.covalenthq.com/v1/80001/address/${address}/balances_v2/?quote-currency=USD&format=JSON&nft=true&no-nft-fetch=false&key=${process.env.COVALENT_API_KEY}`
+  );
+
+  const ret = await resp.json();
+  console.log(ret);
+
+  const profileID = parseInt(
+    ret.data.items.filter(
+      (x) => x.contract_address === "0x60ae865ee4c725cd04353b5aab364553f56cef82"
+    )[0].nft_data[0].token_id
+  );
+
+  res.json({
+    profileID,
+  });
+});
+
+app.post("/optInPush", async (req, res) => {
   const address = req.body.address;
 
   let resp = await fetch(
