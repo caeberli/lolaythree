@@ -273,8 +273,6 @@ app.post("/getProfileID", async (req, res) => {
     `https://api.covalenthq.com/v1/80001/address/${address}/balances_v2/?quote-currency=USD&format=JSON&nft=true&no-nft-fetch=false&key=${process.env.COVALENT_API_KEY}`
   );
 
-  console.log("hi");
-
   const ret = await resp.json();
   console.log(ret);
 
