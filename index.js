@@ -296,34 +296,7 @@ app.post("/getProfileID", async (req, res) => {
   });
 });
 
-//////////////////////////////// LENS START ////////////////////////////////
-
-app.post("/optInPush", async (req, res) => {
-  const PK = process.env.PRIVATE_KEY;
-  const Pkey = `0x${PK}`;
-  const pushSigner = new ethers.Wallet(Pkey);
-
-  const address = req.body.address;
-
-  await PushAPI.channels.subscribe({
-    signer: pushSigner,
-    channelAddress: "eip155:80001:0x0687CB24af3884Cb221E5B27cC459EF880F24228", // channel address in CAIP
-    userAddress: `eip155:80001:${address}`, // user address in CAIP
-    onSuccess: () => {
-      console.log("opt in success");
-      res.json({
-        error: "false",
-      });
-    },
-    onError: () => {
-      console.error("opt in error");
-      res.json({
-        error: "true",
-      });
-    },
-    env: "staging",
-  });
-});
+//////////////////////////////// PUSH START ////////////////////////////////
 
 app.post("/channelDataPush", async (req, res) => {
   const channelData = await PushAPI.channels.getChannel({
@@ -362,6 +335,33 @@ app.post("/messagePush", async (req, res) => {
   console.log(apiResponse);
   res.json({
     error: "false",
+  });
+});
+
+app.post("/optInPush", async (req, res) => {
+  const PK = process.env.PRIVATE_KEY;
+  const Pkey = `0x${PK}`;
+  const pushSigner = new ethers.Wallet(Pkey);
+
+  const address = req.body.address;
+
+  await PushAPI.channels.subscribe({
+    signer: pushSigner,
+    channelAddress: "eip155:80001:0x0687CB24af3884Cb221E5B27cC459EF880F24228", // channel address in CAIP
+    userAddress: `eip155:80001:${address}`, // user address in CAIP
+    onSuccess: () => {
+      console.log("opt in success");
+      res.json({
+        error: "false",
+      });
+    },
+    onError: () => {
+      console.error("opt in error");
+      res.json({
+        error: "true",
+      });
+    },
+    env: "staging",
   });
 });
 
