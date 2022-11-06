@@ -28,6 +28,7 @@
     "ethers": "^5.7.2",
     "express": "^4.18.2",
     "https": "^1.0.0",
+    "nft.storage": "^7.0.0",
     "node-fetch": "^3.2.10",
     "web3": "^1.8.0",
     "web3-eth-abi": "^1.8.0",

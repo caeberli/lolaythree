@@ -12,6 +12,7 @@ import fetch from "node-fetch";
 dotenv.config();
 const abiCoder = new ethers.utils.AbiCoder();
 import { Web3Storage } from "web3.storage";
+import { NFTStorage, File, Blob } from "nft.storage";
 
 // Getting all ABIs
 import lensProfileABI from "./ABIs/lensProfileABI.json" assert { type: "json" };
@@ -76,13 +77,18 @@ const client = new Web3Storage({
     "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiJkaWQ6ZXRocjoweDNlMkZhNTRiNERCMzNEYzYyOTExMGY3NThkN2FFM0FjNjk5RkY2YzQiLCJpc3MiOiJ3ZWIzLXN0b3JhZ2UiLCJpYXQiOjE2Njc3MjYwMjQ0NzQsIm5hbWUiOiJjYWViZXJsaSJ9.k3sc2EfnyFLL5MbTljGTMDyJ4dHzDEeDmVAUID9jrEU",
 });
 
+const NFT_STORAGE_TOKEN =
+  "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiJkaWQ6ZXRocjoweGQ3MTc2MWRBNjEzNWY5NmQzNTA3Q2JiNjhGYTdFMkE2ODRjZkIxNDEiLCJpc3MiOiJuZnQtc3RvcmFnZSIsImlhdCI6MTY2NzcyODE1OTU3MiwibmFtZSI6ImNhZWJlcmxpIn0.W0R4Ue4aoWd2E3HXeT4pjEek07FbZ3ojhYrU77WcDUg";
+const nftClient = new NFTStorage({ token: NFT_STORAGE_TOKEN });
+
 app.post("/uploadIPFS", async (req, res) => {
   const file = req.body.file;
-  const rootCid = await client.put([file]);
+  const cid = await nftClient.storeBlob(file);
+  //const rootCid = await client.put([file]);
 
   res.json({
     error: "false",
-    rootCid,
+    cid,
   });
 });
 
