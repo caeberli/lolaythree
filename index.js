@@ -78,7 +78,7 @@ const client = new Web3Storage({
 
 app.post("/uploadIPFS", async (req, res) => {
   const file = req.body.file;
-  const rootCid = await client.put(files);
+  const rootCid = await client.put(file);
 
   res.json({
     error: "false",

@@ -7,6 +7,7 @@ const meta = document.getElementById("meta");
 const lens = document.getElementById("lens");
 const handleField = document.getElementById("handleField");
 const insights = document.getElementById("insights");
+const loyalCard = document.getElementById("loyalCard");
 
 const divMeta = document.getElementById("divMeta");
 const divLens = document.getElementById("divLens");
@@ -58,9 +59,25 @@ lens.addEventListener("click", async function handleClick() {
 
   var widget = uploadcare.Widget("[role=uploadcare-uploader]");
   var selecedfileurl = "";
+  var cid = "";
 
   widget.onUploadComplete(async function(fileInfo) {
     selecedfileurl = fileInfo.cdnUrl;
+    loyalCard.src = selecedfileurl + "-/resize/225x/";
+    loyalCard.style.display = "block";
+    await fetch("https://loyalthree.herokuapp.com/uploadIPFS", {
+      method: "POST",
+      body: JSON.stringify({
+        file: selecedfileurl,
+      }),
+      headers: {
+        "Content-Type": "application/json",
+      },
+    })
+      .then((response) => response.json())
+      .then((data) => {
+        cid = data.rootCid;
+      });
 
     insights.style.display = "flex";
   });
