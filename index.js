@@ -73,13 +73,10 @@ app.post("/verifyWorldLens", async (req, res) => {
 //////////////////////////////// IPFS START ////////////////////////////////
 
 const client = new Web3Storage({
-  token:
-    "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiJkaWQ6ZXRocjoweDNlMkZhNTRiNERCMzNEYzYyOTExMGY3NThkN2FFM0FjNjk5RkY2YzQiLCJpc3MiOiJ3ZWIzLXN0b3JhZ2UiLCJpYXQiOjE2Njc3MjYwMjQ0NzQsIm5hbWUiOiJjYWViZXJsaSJ9.k3sc2EfnyFLL5MbTljGTMDyJ4dHzDEeDmVAUID9jrEU",
+  token: process.env.WEB3_STORAGE_API_KEY,
 });
 
-const NFT_STORAGE_TOKEN =
-  "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiJkaWQ6ZXRocjoweGQ3MTc2MWRBNjEzNWY5NmQzNTA3Q2JiNjhGYTdFMkE2ODRjZkIxNDEiLCJpc3MiOiJuZnQtc3RvcmFnZSIsImlhdCI6MTY2NzcyODE1OTU3MiwibmFtZSI6ImNhZWJlcmxpIn0.W0R4Ue4aoWd2E3HXeT4pjEek07FbZ3ojhYrU77WcDUg";
-const nftClient = new NFTStorage({ token: NFT_STORAGE_TOKEN });
+const nftClient = new NFTStorage({ token: process.env.NFT_STORAGE_TOKEN });
 
 app.post("/uploadIPFS", async (req, res) => {
   const file = req.body.file;
