@@ -54,7 +54,7 @@ const lensMainContract = new ethers.Contract(
   signer
 );
 
-// We create the profiles with out key
+// We create the profiles with our key
 app.post("/lensCreateProfile", async (req, res) => {
   const address = req.body.address;
   const handle = req.body.handle;
