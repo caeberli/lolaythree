@@ -30,6 +30,7 @@
     "https": "^1.0.0",
     "node-fetch": "^3.2.10",
     "web3": "^1.8.0",
-    "web3-eth-abi": "^1.8.0"
+    "web3-eth-abi": "^1.8.0",
+    "web3.storage": "^4.4.0"
   }
 }

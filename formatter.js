@@ -1,20 +1,44 @@
-const joinHuel = document.getElementById("joinHuel");
-const joinDomino = document.getElementById("joinDomino");
-const joinBlue = document.getElementById("joinBlue");
-const joinDunkin = document.getElementById("joinDunkin");
-const joinStarbucks = document.getElementById("joinStarbucks");
-const joinChipotle = document.getElementById("joinChipotle");
+function delay(time) {
+  return new Promise((resolve) => setTimeout(resolve, time));
+}
 
-joinHuel.addEventListener("click", async function handleClick() {
+var useradd = "";
+const meta = document.getElementById("meta");
+const lens = document.getElementById("lens");
+const handleField = document.getElementById("handleField");
+const insights = document.getElementById("insights");
+
+const divMeta = document.getElementById("divMeta");
+const divLens = document.getElementById("divLens");
+const divLottie = document.getElementById("divLottie");
+
+const textBlock1 = document.getElementById("textBlock1");
+const textBlock2 = document.getElementById("textBlock2");
+const textBlock3 = document.getElementById("textBlock3");
+
+meta.addEventListener("click", async function handleClick() {
+  divMeta.style.display = "none";
+  divLottie.style.display = "flex";
   const accounts = await ethereum.request({ method: "eth_requestAccounts" });
-  const useradd = accounts[0];
+  useradd = accounts[0];
+  divLottie.style.display = "none";
+  divLens.style.display = "flex";
+  textBlock1.style.display = "none";
+  textBlock2.style.display = "flex";
+});
 
-  await fetch("https://loyalthree.herokuapp.com/prepareJoinLoyaltyProgram", {
+var handle = "";
+lens.addEventListener("click", async function handleClick() {
+  handle = "l3b-" + handleField.value;
+
+  divLens.style.display = "none";
+  divLottie.style.display = "flex";
+
+  await fetch("https://loyalthree.herokuapp.com/lensCreateProfile", {
     method: "POST",
     body: JSON.stringify({
-      signerAddress: useradd,
-      businessProfileId: 20741,
-      handle: "l3b-huel",
+      address: useradd,
+      handle: handle,
     }),
     headers: {
       "Content-Type": "application/json",
@@ -25,8 +49,19 @@ joinHuel.addEventListener("click", async function handleClick() {
       console.log(data.tx);
     });
 
-  const txHash = await ethereum.request({
-    method: "eth_sendTransaction",
-    params: [transactionParameters],
+  await delay(1000);
+
+  textBlock2.style.display = "none";
+  textBlock3.style.display = "flex";
+  divLottie.style.display = "none";
+  divWorld.style.display = "flex";
+
+  var widget = uploadcare.Widget("[role=uploadcare-uploader]");
+  var selecedfileurl = "";
+
+  widget.onUploadComplete(async function(fileInfo) {
+    selecedfileurl = fileInfo.cdnUrl;
+
+    insights.style.display = "flex";
   });
 });

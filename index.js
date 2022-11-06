@@ -11,6 +11,7 @@ import { Headers } from "node-fetch";
 import fetch from "node-fetch";
 dotenv.config();
 const abiCoder = new ethers.utils.AbiCoder();
+import { Web3Storage } from "web3.storage";
 
 // Getting all ABIs
 import lensProfileABI from "./ABIs/lensProfileABI.json" assert { type: "json" };
@@ -65,6 +66,23 @@ app.post("/verifyWorldLens", async (req, res) => {
   res.json({
     error: "false",
     tx,
+  });
+});
+
+//////////////////////////////// IPFS START ////////////////////////////////
+
+const client = new Web3Storage({
+  token:
+    "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiJkaWQ6ZXRocjoweDNlMkZhNTRiNERCMzNEYzYyOTExMGY3NThkN2FFM0FjNjk5RkY2YzQiLCJpc3MiOiJ3ZWIzLXN0b3JhZ2UiLCJpYXQiOjE2Njc3MjYwMjQ0NzQsIm5hbWUiOiJjYWViZXJsaSJ9.k3sc2EfnyFLL5MbTljGTMDyJ4dHzDEeDmVAUID9jrEU",
+});
+
+app.post("/uploadIPFS", async (req, res) => {
+  const file = req.body.file;
+  const rootCid = await client.put(files);
+
+  res.json({
+    error: "false",
+    rootCid,
   });
 });
 
