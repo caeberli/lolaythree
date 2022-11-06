@@ -48,7 +48,7 @@ const worldLensContract = new ethers.Contract(
   signer
 );
 
-app.post("/prepareWorldTx", async (req, res) => {
+app.post("/verifyWorldLens", async (req, res) => {
   const input = req.body.input;
   const root = req.body.root;
   const nullifierHash = req.body.nullifierHash;
