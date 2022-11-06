@@ -269,7 +269,6 @@ app.post("/prepareJoinLoyaltyProgram", async (req, res) => {
   res.json({
     transactionParameters,
   });
-  lolaythree / README.md;
 });
 
 app.post("/loyaltyPoint", async (req, res) => {
