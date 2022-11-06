@@ -1,6 +1,6 @@
 Adress used to transact for almost everything: 0x0687CB24af3884Cb221E5B27cC459EF880F24228
 
-The graoh suggraph deployed to here
+The graph subgraph deployed to here
 https://thegraph.com/explorer/subgraph/caeberli/loyalthree-subgraph
 
 Push Channel creation
