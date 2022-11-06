@@ -40,6 +40,34 @@ const alchemyProvider = new ethers.providers.AlchemyProvider(
 const signer = new ethers.Wallet(process.env.PRIVATE_KEY, alchemyProvider);
 const feeData = await alchemyProvider.getFeeData();
 
+//////////////////////////////// WORLDCOIN START ////////////////////////////////
+
+const worldLensContract = new ethers.Contract(
+  "0x2E81a56E9Ca2bAb2E73EFE732606500b310ee8F7",
+  worldLensABI,
+  signer
+);
+
+app.post("/prepareWorldTx", async (req, res) => {
+  const input = req.body.input;
+  const root = req.body.root;
+  const nullifierHash = req.body.nullifierHash;
+  const proof = req.body.proof;
+
+  const feeData = await alchemyProvider.getFeeData();
+  let tx = await worldLensContract.verify(input, root, nullifierHash, proof, {
+    gasPrice: Math.round(Number(feeData.gasPrice) * 1.5),
+    gasLimit: 500000,
+  });
+
+  console.log(tx);
+
+  res.json({
+    error: "false",
+    tx,
+  });
+});
+
 //////////////////////////////// LENS START ////////////////////////////////
 
 const mockProfileContract = new ethers.Contract(
@@ -241,6 +269,7 @@ app.post("/prepareJoinLoyaltyProgram", async (req, res) => {
   res.json({
     transactionParameters,
   });
+  lolaythree / README.md;
 });
 
 app.post("/loyaltyPoint", async (req, res) => {
