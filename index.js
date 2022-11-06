@@ -20,7 +20,7 @@ import worldLensABI from "./ABIs/worldLensABI.json" assert { type: "json" };
 import tellorRNGABI from "./ABIs/tellorRNGABI.json" assert { type: "json" };
 import tellorPlayABI from "./ABIs/tellorPlayABI.json" assert { type: "json" };
 
-// Initializing Express
+// Initializing Expresss
 const app = express();
 const PORT = process.env.PORT || 9001;
 app.use(express.json());
