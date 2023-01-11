@@ -25,4 +25,4 @@ We have 3 endpoints that are live:
 
 - Call random number generator
 - Submit Value
-- Retrieve Value
+- Retrieve Value.
